@@ -24,8 +24,13 @@ list_of_dicts = []
 for i in range(number_of_dicts):
     new_dict = {}
     elements_in_dict = random.randint(2, 10)
-    for j in range(elements_in_dict):
-        new_dict[letters[random.randint(0, len(letters)-1)]] = random.randint(0,100)
+    while len(new_dict) != elements_in_dict:
+        key = letters[random.randint(0, len(letters)-1)]
+        # check if key exist
+        if key in new_dict.keys():
+            continue
+        else:
+            new_dict[letters[random.randint(0, len(letters)-1)]] = random.randint(0,100)
     list_of_dicts.append(new_dict)
 
 print(list_of_dicts)
