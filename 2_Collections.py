@@ -34,3 +34,5 @@ for i in range(number_of_dicts):
     list_of_dicts.append(new_dict)
 
 print(list_of_dicts)
+
+common_dict = {}
