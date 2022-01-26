@@ -1,10 +1,8 @@
 import random # module for generate random int
 
-list = [] #create empthy list
 
-# generate 100 random numbers and put it to list
-for i in range(0, 100):
-    list.append(random.randint(0, 1000))
+# generate 100 random numbers and put it to list using list comprehensions
+list = [random.randint(0, 1000) for i in range(0, 100)]
 
 print(list)
 # sort list from min to max (without using sort())
