@@ -12,8 +12,9 @@ sorted_list = []
 for i in range(0, len(list)):
     sorted_list.append(min(list))  #find min of list and append to new list
     list.pop(list.index(min(list)))  #delete min from old list
+list = sorted_list
 
-print(sorted_list)
+print(list)
 
 sum_odd = 0
 count_odd = 0
@@ -21,7 +22,7 @@ sum_even = 0
 count_even = 0
 
 #calculate sum and count of evens and odds
-for i in sorted_list:
+for i in list:
     if i % 2 == 0:
         sum_even = sum_even + i
         count_even = count_even + 1
