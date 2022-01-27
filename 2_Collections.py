@@ -1,15 +1,3 @@
-#1. create a list of random number of dicts (from 2 to 10)
-
-#dict's random numbers of keys should be letter,
-#dict's values should be a number (0-100),
-#example: [{'a': 5, 'b': 7, 'g': 11}, {'a': 3, 'c': 35, 'g': 42}]
-#2. get previously generated list of dicts and create one common dict:
-
-#if dicts have same key, we will take max value, and rename key with dict number with max value
-#if key is only in one dict - take it as is,
-#example: {'a_1': 5, 'b': 7, 'c': 35, 'g_2': 42}
-#Each line of code should be commented with description.
-
 # module for generate random int
 import random
 
@@ -17,22 +5,47 @@ import random
 number_of_dicts = random.randint(2, 10)
 # letters for keys
 letters = 'abcdefghijklmnopqrstuvwxyz'
-# empty list
+# empty list of dicts
 list_of_dicts = []
 
 # fill list with dicts with random size and random key/value pair
 for i in range(number_of_dicts):
     new_dict = {}
     elements_in_dict = random.randint(2, 10)
+    # fill dicts
     while len(new_dict) != elements_in_dict:
+        # get random key
         key = letters[random.randint(0, len(letters)-1)]
-        # check if key exist
+        # check if key already exist in dict
         if key in new_dict.keys():
             continue
         else:
-            new_dict[letters[random.randint(0, len(letters)-1)]] = random.randint(0,100)
+            # set new key with random value
+            new_dict[letters[random.randint(0, len(letters)-1)]] = random.randint(0, 100)
     list_of_dicts.append(new_dict)
 
 print(list_of_dicts)
 
 common_dict = {}
+already_inserted = []
+# adding key/value to common dict
+for i in range(len(list_of_dicts)):
+    # iterate by keys in dict
+    for key in list_of_dicts[i].keys():
+        # check if key already inserted
+        if key not in already_inserted:
+            list_values = []
+            # collect all values for key
+            for dicti in list_of_dicts:
+                if key in dicti.keys():
+                    list_values.append(dicti[key])
+            # if value of key is max of list of all values for this key then insert to common dict
+            if list_of_dicts[i].get(key) == max(list_values):
+                # if key unique for all dicts, insert it as is
+                if len(list_values) == 1:
+                    common_dict[key] = max(list_values)
+                # if key not unique for all dicts, insert key with number of order of dict in list
+                elif len(list_values) > 1:
+                    common_dict[key + "_" + str(i+1)] = max(list_values)
+
+print(common_dict)
