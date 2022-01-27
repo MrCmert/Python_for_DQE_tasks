@@ -44,8 +44,10 @@ for i in range(len(list_of_dicts)):
                 # if key unique for all dicts, insert it as is
                 if len(list_values) == 1:
                     common_dict[key] = max(list_values)
+                    already_inserted.append(key)
                 # if key not unique for all dicts, insert key with number of order of dict in list
                 elif len(list_values) > 1:
                     common_dict[key + "_" + str(i+1)] = max(list_values)
+                    already_inserted.append(key)
 
 print(common_dict)
