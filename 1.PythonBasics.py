@@ -29,13 +29,13 @@ for i in list:
     elif i % 2 != 0:
         list_odd.append(i)
 
-# calculate avg even and handling division by 0
+# calculate avg evens and handling division by 0
 try:
     avg_even = sum(list_even)/len(list_even)
 except ZeroDivisionError:
     avg_even = 0
 
-# same for odds
+# calculate avg odds and handling division by 0
 try:
     avg_odd = sum(list_odd) / len(list_odd)
 except ZeroDivisionError:
