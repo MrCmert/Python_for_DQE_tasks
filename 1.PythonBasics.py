@@ -2,28 +2,28 @@
 import random
 
 # generate 100 random numbers and put it to list using list comprehensions
-list = [random.randint(0, 1000) for i in range(0, 100)]
+rand_list = [random.randint(0, 1000) for i in range(0, 100)]
 
-print(list)
+print(rand_list)
 # sort list from min to max (without using sort())
 # using bubble sort
 # iteration by all elements
-for i in range(len(list)):
+for i in range(len(rand_list)):
     # iteration by all elements except last and already sorted
-    for j in range(0, len(list) - i - 1):
+    for j in range(0, len(rand_list) - i - 1):
         # compare element with next
-        if list[j] > list[j + 1]:
+        if rand_list[j] > rand_list[j + 1]:
             # if this element more than next replace them. set max element in the end
-            list[j], list[j+1] = list[j+1], list[j]
+            rand_list[j], rand_list[j+1] = rand_list[j+1], rand_list[j]
 
-print(list)
+print(rand_list)
 
 # create lists for odd and even
 list_odd = []
 list_even = []
 
 # filter odds and evens to different lists
-for i in list:
+for i in rand_list:
     if i % 2 == 0:
         list_even.append(i)
     elif i % 2 != 0:
