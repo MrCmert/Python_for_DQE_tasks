@@ -32,7 +32,7 @@ already_inserted = []
 for i in range(len(list_of_dicts)):
     # iterate by keys in dict
     for key in list_of_dicts[i].keys():
-        # check if key already inserted
+        # check if key already inserted, skip it
         if key not in already_inserted:
             list_values = []
             # collect all values for key
