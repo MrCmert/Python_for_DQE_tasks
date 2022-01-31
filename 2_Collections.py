@@ -21,7 +21,7 @@ for i in range(number_of_dicts):
             continue
         else:
             # set new key with random value
-            new_dict[letters[randint(0, len(letters)-1)]] = randint(0, 100)
+            new_dict[key] = randint(0, 100)
     list_of_dicts.append(new_dict)
 
 print(list_of_dicts)
@@ -51,3 +51,5 @@ for i in range(len(list_of_dicts)):
                     already_inserted.append(key)
 
 print(common_dict)
+
+
