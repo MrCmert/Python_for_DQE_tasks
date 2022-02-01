@@ -51,8 +51,8 @@ for i in range(len(list_of_dicts)):
                     already_inserted.append(key)
 
 # check if all keys is inserted
-for i in range(len(list_of_dicts)):
-    for key in list_of_dicts[i].keys():
+for i in list_of_dicts:
+    for key in i.keys():
         if key not in already_inserted:
             raise Exception(key + " not inserted in common dict", common_dict)
         else:
