@@ -30,3 +30,23 @@ for i in final_result:
     if i in [' ', '\t', '\r', '\n', '\v', '\f']:
         count_whitespaces += 1
 print("Number of whitespace characters: ", count_whitespaces)
+
+# add sentence with last words
+# find all last words and add it to list
+list_string = final_result.split('.')
+words_for_sentence = []
+for i in list_string:
+    each_word = i.split()
+    if len(each_word) != 0 and each_word[len(each_word)-1].isdigit() is False:
+        words_for_sentence.append(each_word[len(each_word)-1])
+
+# combine last words to sentence
+result_sentence = " ".join(words_for_sentence) + '.'
+result_sentence = result_sentence.capitalize()
+print(result_sentence)
+
+# add sentence in correct place
+pattern = "add it to the END OF this Paragraph.".lower()
+result_with_sentence = final_result.replace(pattern, pattern + ' ' + result_sentence)
+
+print(result_with_sentence)
