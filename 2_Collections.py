@@ -4,7 +4,7 @@ from random import randint
 # generate number of dicts
 number_of_dicts = randint(2, 10)
 # letters for keys
-letters = 'abcdefghijklmnopqrstuvwxyz'
+letters = "abcdefghijklmnopqrstuvwxyz"
 # empty list of dicts
 list_of_dicts = []
 
@@ -49,6 +49,15 @@ for i in range(len(list_of_dicts)):
                 elif len(list_values) > 1:
                     common_dict[key + "_" + str(i+1)] = max(list_values)
                     already_inserted.append(key)
+
+# check if all keys is inserted
+for i in range(len(list_of_dicts)):
+    for key in list_of_dicts[i].keys():
+        if key not in already_inserted:
+            raise Exception(key + " not inserted in common dict", common_dict)
+        else:
+            continue
+
 
 print(common_dict)
 
