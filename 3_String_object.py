@@ -1,3 +1,5 @@
+import re
+
 homework = '''homEwork:
 	tHis iz your homeWork, copy these Text to variable. 
 
@@ -49,4 +51,11 @@ print(result_sentence)
 pattern = "add it to the END OF this Paragraph.".lower()
 result_with_sentence = final_result.replace(pattern, pattern + ' ' + result_sentence)
 
+print(result_with_sentence)
+
+# add space before quoted word without space
+quoted_without_excape = re.findall(r'[^\s]([“].+?[”])', result_with_sentence)
+for i in set(quoted_without_excape):
+   start_index = result_with_sentence.index(i)
+   result_with_sentence = result_with_sentence[:start_index] + ' ' + result_with_sentence[start_index:]
 print(result_with_sentence)
