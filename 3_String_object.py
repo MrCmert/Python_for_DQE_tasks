@@ -15,7 +15,7 @@ homework = homework.capitalize()
 right_case = ''
 for i in range(0, len(homework)):
     # upper case letter that after tab symbol or after dot
-    if homework[i-1] == '\t' or homework[i-2:i] == '. ':
+    if homework[i - 1] == '\t' or homework[i - 2:i] == '. ':
         right_case += homework[i].upper()
     else:
         right_case += homework[i]
@@ -39,8 +39,8 @@ list_string = final_result.split('.')
 words_for_sentence = []
 for i in list_string:
     each_word = i.split()
-    if len(each_word) != 0 and each_word[len(each_word)-1].isdigit() is False:
-        words_for_sentence.append(each_word[len(each_word)-1])
+    if len(each_word) != 0 and each_word[len(each_word) - 1].isdigit() is False:
+        words_for_sentence.append(each_word[len(each_word) - 1])
 
 # combine last words to sentence
 result_sentence = " ".join(words_for_sentence) + '.'
@@ -54,8 +54,8 @@ result_with_sentence = final_result.replace(pattern, pattern + ' ' + result_sent
 print(result_with_sentence)
 
 # add space before quoted word without space
-quoted_without_excape = re.findall(r'[^\s]([“].+?[”])', result_with_sentence)
-for i in set(quoted_without_excape):
-   start_index = result_with_sentence.index(i)
-   result_with_sentence = result_with_sentence[:start_index] + ' ' + result_with_sentence[start_index:]
+quoted_without_space = re.findall(r'[^\s]([“].+?[”])', result_with_sentence)
+for i in quoted_without_space:
+    start_index = result_with_sentence.index(i)
+    result_with_sentence = result_with_sentence[:start_index] + ' ' + result_with_sentence[start_index:]
 print(result_with_sentence)
