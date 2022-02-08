@@ -3,13 +3,7 @@ import re
 
 # func for counting whitespaces
 def count_whitespaces(string):
-    if not isinstance(string, str):
-        raise Exception("Wrong input")
-    count = 0
-    for i in string:
-        # check if character in list of whitespace characters
-        if i in [' ', '\t', '\r', '\n', '\v', '\f']:
-            count += 1
+    count = len(re.findall(r'\s', string))
     return count
 
 
@@ -25,6 +19,7 @@ def normalize_text(string):
             right_case += string[i].upper()
         else:
             right_case += string[i]
+    right_case = right_case.replace('\n\n', '\n')
     return right_case
 
 
@@ -40,12 +35,11 @@ def change_wrong_word(string, wrong, right):
 def adding_last_word_sentence(string, pattern):
     if not isinstance(string, str) or not isinstance(pattern, str):
         raise Exception("Wrong input")
-    list_string = string.split('.')
-    words_for_sentence = []
-    for i in list_string:
-        each_word = i.split()
-        if len(each_word) != 0 and each_word[len(each_word) - 1].isdigit() is False:
-            words_for_sentence.append(each_word[len(each_word) - 1])
+
+    # find words before dots
+    words_for_sentence = re.findall(r'[a-zA-Z0-9]*(?=\.)', string)
+    while '' in words_for_sentence:
+        words_for_sentence.remove('')
 
     # combine last words to sentence
     result_sentence = " ".join(words_for_sentence) + '.'
@@ -79,13 +73,13 @@ homework = '''homEwork:
 	last iz TO calculate nuMber OF Whitespace characteRS in this Text. caREFULL, not only Spaces, but ALL whitespaces. I got 87.
 '''
 
-print(count_whitespaces(homework))
+print("Number of whitespace characters: ", count_whitespaces(homework))
 sentence = normalize_text(homework)
-print(sentence)
+print("Text after normalize\n"+sentence)
 sentence = change_wrong_word(sentence, 'iz', 'is')
-print(sentence)
+print("Text after replacing wrong placed word\n"+sentence)
 sentence = adding_last_word_sentence(sentence, "add it to the END OF this Paragraph.")
-print(sentence)
+print("Text with last word sentence inserted in place\n", sentence)
 sentence = fix_spaces_before_quotes(sentence)
-print(sentence)
+print("Text with space before quotes\n"+sentence)
 
