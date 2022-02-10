@@ -2,9 +2,8 @@ import re
 
 
 # func for counting whitespaces
-def count_whitespaces(string):
-    count = len(re.findall(r'\s', string))
-    return count
+# using_lambda
+count_whitespace = lambda string: len(re.findall(r'\s', string))
 
 
 # func for normalize text
@@ -32,6 +31,7 @@ def normalize_text(string):
 
 
 # func for change wrong word
+# change_wrong_word = lambda string, wrong, right: string.replace(' ' + wrong + ' ', ' ' + right + ' ')
 def change_wrong_word(string, wrong, right):
     if not isinstance(string, str) or not isinstance(wrong, str) or not isinstance(right, str):
         raise Exception("Wrong input")
@@ -81,7 +81,7 @@ homework = '''homEwork:
 	last iz TO calculate nuMber OF Whitespace characteRS in this Text. caREFULL, not only Spaces, but ALL whitespaces. I got 87.
 '''
 
-print("Number of whitespace characters: ", count_whitespaces(homework))
+print("Number of whitespace characters: ", count_whitespace(homework))
 sentence = normalize_text(homework)
 print("Text after normalize\n"+sentence)
 sentence = change_wrong_word(sentence, 'iz', 'is')
