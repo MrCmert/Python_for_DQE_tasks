@@ -13,12 +13,20 @@ def normalize_text(string):
         raise Exception("Wrong input")
     string = string.capitalize()
     right_case = ''
-    for i in range(0, len(string)):
-        # upper case letter that after tab symbol or after dot
-        if string[i - 1] == '\t' or string[i - 2:i] == '. ':
-            right_case += string[i].upper()
+    after_symbol = False
+    # after find dot or colon, next letter is uppercase
+    for i in string:
+        if after_symbol:
+            if i.isalpha():
+                right_case += i.upper()
+                after_symbol = False
+            else:
+                right_case += i
         else:
-            right_case += string[i]
+            if i in ('.', ':'):
+                after_symbol = True
+            right_case += i
+    # delete empty lines
     right_case = right_case.replace('\n\n', '\n')
     return right_case
 
@@ -36,7 +44,7 @@ def adding_last_word_sentence(string, pattern):
     if not isinstance(string, str) or not isinstance(pattern, str):
         raise Exception("Wrong input")
 
-    # find words before dots
+    # find words before dots using regexp
     words_for_sentence = re.findall(r'[a-zA-Z0-9]*(?=\.)', string)
     while '' in words_for_sentence:
         words_for_sentence.remove('')
