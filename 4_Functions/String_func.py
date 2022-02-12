@@ -3,7 +3,7 @@ import re
 
 def check_string_input(func):
     """
-    work if function have 3 or less parameters
+    !!!work if function have 3 or less parameters
     :param func: function that have string input parameters
     :return: check if parameters is string and return result function
     """
