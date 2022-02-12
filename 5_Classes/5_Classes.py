@@ -1,21 +1,8 @@
-# Create a tool, which will do user generated news feed:
-
-# 1.User select what data type he wants to add
-# 2.Provide record type required data
-# 3.Record is published on text file in special format
-
-# You need to implement:
-
-# 1.News – text and city as input. Date is calculated during publishing.
-# 2.Privat ad – text and expiration date as input. Day left is calculated during publishing.
-# 3.Your unique one with unique publish rules.
-
-# Each new record should be added to the end of file. Commit file in git for review.
 from datetime import datetime, timedelta
 
 
 class Publication:
-    def __init__(self, t):
+    def __init__(self, t="None"):
         self.text = t
 
     def publish(self):
@@ -30,7 +17,7 @@ class Publication:
             topic = new_topic
             minuses = 30 - len(topic)
             f.write(topic + ' ' + minuses * "-" + "\n")
-            f.write(self.text + "\n")
+            f.write(self.text)
 
 
 class News(Publication):
@@ -41,8 +28,7 @@ class News(Publication):
     def publish(self):
         Publication.publish(self)
         with open('news_feed.txt', 'a') as f:
-            f.write(self.city + ", " + str(datetime.strftime(datetime.today(), "%d/%m/%Y %H.%M")) + "\n")
-            f.write("\n")
+            f.write("\n" + self.city + ", " + str(datetime.strftime(datetime.today(), "%d/%m/%Y %H.%M")) + "\n\n")
 
 
 class PrivateAd(Publication):
@@ -54,20 +40,22 @@ class PrivateAd(Publication):
     def publish(self):
         Publication.publish(self)
         with open('news_feed.txt', 'a') as f:
-            f.write("Actual until: " + datetime.strftime(self.exp_date, "%d/%m/%Y") + ", " + self.days + " days left\n")
-            f.write("\n")
+            f.write("\nActual until: " + datetime.strftime(self.exp_date, "%d/%m/%Y") + ", "
+                    + str(self.days) + " days left\n\n")
 
 
-class Something(Publication):
-    def __init__(self, t="None", c="None"):
+class BirthdayInThisMonth(Publication):
+    def __init__(self, t="None", b=1, y=2020):
         Publication.__init__(self, t=t)
-        self.city = c
+        self.birthday = b
+        self.year = y
 
     def publish(self):
         Publication.publish(self)
         with open('news_feed.txt', 'a') as f:
-            f.write(self.city + ", " + str(datetime.strftime(datetime.today(), "%d/%m/%Y %H.%M")) + "\n")
-            f.write("\n")
+            f.write(" birthday " +
+                    str(datetime.strftime(datetime.today().replace(day=self.birthday, year=self.year), "%d %B."))
+                    + "\nTurns " + str((datetime.now().year - self.year)) + " years old. Let's congratulate.\n\n")
 
 
 if __name__ == "__main__":
@@ -88,13 +76,15 @@ if __name__ == "__main__":
             n.publish()
         elif n == '2':
             text = input("Enter text of ad: ")
-            days = input("Enter number of days it should be shown: ")
+            days = int(input("Enter number of days it should be shown: "))
             a = PrivateAd(text, days)
             a.publish()
         elif n == '3':
-            text = input("Enter text of smth: ")
-            days = input("Enter smth: ")
-            s = Something(text, days)
+            name = input("Enter name of the birthday boy: ")
+            day = int(input("Enter day of birthday: "))
+            year = int(input("Enter year of birthday: "))
+            s = BirthdayInThisMonth(name, day, year)
             s.publish()
         elif n == '0':
+            print("Time to see news feed today")
             record = False
