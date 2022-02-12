@@ -2,8 +2,12 @@
 from random import randint
 
 
-# func for generate dict
 def dict_generator(keys):
+    """
+    func for generate dict
+    :param keys: keys for dict
+    :return: dict with random number of keys and values (0, 100)
+    """
     # check if input is correct
     if not isinstance(keys, (str, list)):
         raise Exception("Wrong keys")
@@ -27,8 +31,13 @@ def dict_generator(keys):
     return new_dict
 
 
-# func for generate list of dicts
 def list_of_dicts_generator(keys, quantity_of_dictionaries):
+    """
+    func for generate list of dicts
+    :param keys: keys for dicts
+    :param quantity_of_dictionaries:
+    :return: list of dicts
+    """
     list_of_dicts = []
     # fill list with dicts with random size and random key/value pair
     for i in range(quantity_of_dictionaries):
@@ -37,8 +46,12 @@ def list_of_dicts_generator(keys, quantity_of_dictionaries):
     return list_of_dicts
 
 
-# func for merging list of dicts
 def merge_list(list_for_merge):
+    """
+    func for merging list of dicts
+    :param list_for_merge: list with dicts
+    :return: merged list with keys with indexes of dict that have max value
+    """
     # check if input is correct
     if not isinstance(list_for_merge, list):
         raise Exception("Wrong input")
