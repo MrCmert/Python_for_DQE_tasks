@@ -102,24 +102,25 @@ def fix_spaces_before_quotes(string):
     return string
 
 
-homework = '''homEwork:
-	tHis iz your homeWork, copy these Text to variable. 
+if __name__ == "__main__":
+    homework = '''homEwork:
+        tHis iz your homeWork, copy these Text to variable. 
+    
+        You NEED TO normalize it fROM letter CASEs point oF View. also, create one MORE senTENCE witH LAST WoRDS of each existING SENtence and add it to the END OF this Paragraph.
+    
+        it iZ misspeLLing here. fix“iZ” with correct “is”, but ONLY when it Iz a mistAKE. 
+    
+        last iz TO calculate nuMber OF Whitespace characteRS in this Text. caREFULL, not only Spaces, but ALL whitespaces. I got 87.
+    '''
 
-	You NEED TO normalize it fROM letter CASEs point oF View. also, create one MORE senTENCE witH LAST WoRDS of each existING SENtence and add it to the END OF this Paragraph.
-
-	it iZ misspeLLing here. fix“iZ” with correct “is”, but ONLY when it Iz a mistAKE. 
-
-	last iz TO calculate nuMber OF Whitespace characteRS in this Text. caREFULL, not only Spaces, but ALL whitespaces. I got 87.
-'''
-
-print("Number of whitespace characters: ", count_whitespace(homework))
-sentence = normalize_text(homework)
-print("Text after normalize\n"+sentence)
-sentence = change_wrong_word(sentence, 'iz', 'is')
-print("Text after replacing wrong placed word\n"+sentence)
-sentence = adding_last_word_sentence(sentence, "add it to the END OF this Paragraph.")
-print("Text with last word sentence inserted in place\n", sentence)
-sentence = fix_spaces_before_quotes(sentence)
-print("Text with space before quotes\n"+sentence)
+    print("Number of whitespace characters: ", count_whitespace(homework))
+    sentence = normalize_text(homework)
+    print("Text after normalize\n"+sentence)
+    sentence = change_wrong_word(sentence, 'iz', 'is')
+    print("Text after replacing wrong placed word\n"+sentence)
+    sentence = adding_last_word_sentence(sentence, "add it to the END OF this Paragraph.")
+    print("Text with last word sentence inserted in place\n", sentence)
+    sentence = fix_spaces_before_quotes(sentence)
+    print("Text with space before quotes\n"+sentence)
 
 
