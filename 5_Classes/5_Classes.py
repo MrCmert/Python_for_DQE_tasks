@@ -5,7 +5,7 @@ class Publication:
     def __init__(self, t="None"):
         self.text = t
 
-    def publish(self):
+    def publish_topic(self):
         """
         :return: add name of class and text into file
         """
@@ -18,23 +18,28 @@ class Publication:
                 else:
                     new_topic = new_topic + topic[i]
             topic = new_topic
-            minuses = 30 - len(topic)
-            f.write(topic + ' ' + minuses * "-" + "\n")
-            f.write(self.text)
+            minuses = (30 - len(topic))*'-'
+            f.write(f"{topic} {minuses}\n")
+
+    def publish(self):
+        with open('news_feed.txt', 'a') as f:
+            f.write(self.text + "\n")
 
 
 class News(Publication):
     def __init__(self, t="None", c="None"):
         Publication.__init__(self, t=t)
         self.city = c
+        self.publication_date = str(datetime.strftime(datetime.today(), "%d/%m/%Y %H.%M"))
 
     def publish(self):
         """
         :return: add topic, text and publication date to file
         """
+        Publication.publish_topic(self)
         Publication.publish(self)
         with open('news_feed.txt', 'a') as f:
-            f.write("\n" + self.city + ", " + str(datetime.strftime(datetime.today(), "%d/%m/%Y %H.%M")) + "\n\n")
+            f.write(f"{self.city}, {self.publication_date}\n\n")
 
 
 class PrivateAd(Publication):
@@ -42,32 +47,34 @@ class PrivateAd(Publication):
         Publication.__init__(self, t=t)
         self.days = d
         self.exp_date = datetime.now() + timedelta(days=int(self.days))
+        self.insert_date = datetime.strftime(self.exp_date, "%d/%m/%Y")
 
     def publish(self):
         """
         :return: add topic, text, expiration date and days left  to file
         """
+        Publication.publish_topic(self)
         Publication.publish(self)
         with open('news_feed.txt', 'a') as f:
-            f.write("\nActual until: " + datetime.strftime(self.exp_date, "%d/%m/%Y") + ", "
-                    + str(self.days) + " days left\n\n")
+            f.write(f"Actual until: {self.insert_date}, {self.days} days left\n\n")
 
 
 class BirthdayInThisMonth(Publication):
-    def __init__(self, t="None", b=1, y=2020):
-        Publication.__init__(self, t=t)
+    def __init__(self, n="None", b=1, y=2020):
+        self.name = n
         self.birthday = b
         self.year = y
+        self.birthday_date = datetime.strftime(datetime.today().replace(day=self.birthday, year=self.year), "%d %B")
+        self.years_old = datetime.now().year - self.year
 
     def publish(self):
         """
         :return: add topic and birthday boy with date and years to file
         """
-        Publication.publish(self)
+        Publication.publish_topic(self)
         with open('news_feed.txt', 'a') as f:
-            f.write(" birthday " +
-                    str(datetime.strftime(datetime.today().replace(day=self.birthday, year=self.year), "%d %B."))
-                    + "\nTurns " + str((datetime.now().year - self.year)) + " years old. Let's congratulate.\n\n")
+            f.write(f"{self.name} birthday {self.birthday_date}\nTurns {self.years_old} years old. "
+                    f"Let's congratulate.\n\n")
 
 
 def start_news():
