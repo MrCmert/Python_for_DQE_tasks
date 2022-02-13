@@ -6,6 +6,9 @@ class Publication:
         self.text = t
 
     def publish(self):
+        """
+        :return: add name of class and text into file
+        """
         with open('news_feed.txt', 'a') as f:
             topic = str(type(self).__name__)
             new_topic = topic[0]
@@ -26,6 +29,9 @@ class News(Publication):
         self.city = c
 
     def publish(self):
+        """
+        :return: add topic, text and publication date to file
+        """
         Publication.publish(self)
         with open('news_feed.txt', 'a') as f:
             f.write("\n" + self.city + ", " + str(datetime.strftime(datetime.today(), "%d/%m/%Y %H.%M")) + "\n\n")
@@ -38,6 +44,9 @@ class PrivateAd(Publication):
         self.exp_date = datetime.now() + timedelta(days=int(self.days))
 
     def publish(self):
+        """
+        :return: add topic, text, expiration date and days left  to file
+        """
         Publication.publish(self)
         with open('news_feed.txt', 'a') as f:
             f.write("\nActual until: " + datetime.strftime(self.exp_date, "%d/%m/%Y") + ", "
@@ -51,6 +60,9 @@ class BirthdayInThisMonth(Publication):
         self.year = y
 
     def publish(self):
+        """
+        :return: add topic and birthday boy with date and years to file
+        """
         Publication.publish(self)
         with open('news_feed.txt', 'a') as f:
             f.write(" birthday " +
@@ -58,7 +70,11 @@ class BirthdayInThisMonth(Publication):
                     + "\nTurns " + str((datetime.now().year - self.year)) + " years old. Let's congratulate.\n\n")
 
 
-if __name__ == "__main__":
+def start_news():
+    """
+    start fill news feed
+    :return: write all news in file
+    """
     with open('news_feed.txt', 'w') as file:
         file.write("News feed:\n")
 
@@ -67,7 +83,7 @@ if __name__ == "__main__":
         n = input("Choose data type.\n"
                   "Enter - 1 if wanna add news.\n"
                   "Enter - 2 if wanna add privat ad\n"
-                  "Enter - 3 if wanna add something\n"
+                  "Enter - 3 if wanna add birthday in this month\n"
                   "Enter - 0 if you ended add publications\n")
         if n == '1':
             text = input("Enter text of news: ")
@@ -86,5 +102,10 @@ if __name__ == "__main__":
             s = BirthdayInThisMonth(name, day, year)
             s.publish()
         elif n == '0':
-            print("Time to see news feed today")
             record = False
+            print("Time to see news feed today")
+
+
+if __name__ == "__main__":
+    start_news()
+
