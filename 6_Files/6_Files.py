@@ -28,9 +28,6 @@ class Publication:
         with open('news_feed.txt', 'a') as f:
             f.write(self.text + "\n")
 
-    def set_text(self, t):
-        self.text = t
-
 
 class News(Publication):
     def __init__(self, t="None", c="None"):
@@ -47,34 +44,12 @@ class News(Publication):
         with open('news_feed.txt', 'a') as f:
             f.write(f"{self.city}, {self.publication_date}\n\n")
 
-    def set_city(self, c):
-        self.city = c
-
-    def param_write(self):
-        while True:
-            text = input("Enter text of news: ")
-            if len(text.replace(" ", "")) <= 0:
-                print("Your news is empty. Try again")
-            else:
-                break
-        self.set_text(text)
-        while True:
-            city = input("Enter city where it happened: ")
-            if len(city.replace(" ", "")) <= 0:
-                print("Your city is empty. Try again")
-            else:
-                break
-        self.set_city(city)
-        self.publish()
-
 
 class PrivateAd(Publication):
-    def __init__(self, t="None", exp_date='12/12/2022'):
+    def __init__(self, t="None", d=0):
         Publication.__init__(self, t=t)
-        self.exp_date = datetime.strptime(exp_date, "%d/%m/%Y")
-        self.days = (self.exp_date - datetime.today()).days
-        if self.days < 0:
-            self.days = 0
+        self.days = d
+        self.exp_date = datetime.now() + timedelta(days=int(self.days))
         self.insert_date = datetime.strftime(self.exp_date, "%d/%m/%Y")
 
     def publish(self):
@@ -85,32 +60,6 @@ class PrivateAd(Publication):
         Publication.publish(self)
         with open('news_feed.txt', 'a') as f:
             f.write(f"Actual until: {self.insert_date}, {self.days} days left\n\n")
-
-    def set_exp_date(self, exp_date):
-        self.exp_date = datetime.strptime(exp_date, "%d/%m/%Y")
-        self.days = (self.exp_date - datetime.today()).days
-        if self.days < 0:
-            self.days = 0
-        self.insert_date = datetime.strftime(self.exp_date, "%d/%m/%Y")
-
-    def param_write(self):
-        while True:
-            text = input("Enter text of ad: ")
-            if len(text.replace(' ', '')) <= 0:
-                print("Your ad is empty. Try again")
-            else:
-                break
-        self.set_text(text)
-        while True:
-            try:
-                exp_date = input("Enter date until it should be shown, in format dd/mm/YYYY. Example: 12/09/2022 ")
-                self.set_exp_date(exp_date)
-            except ValueError:
-                print("Wrong format of date. Try again")
-                continue
-            else:
-                break
-        self.publish()
 
 
 class BirthdayInThisMonth(Publication):
@@ -130,38 +79,6 @@ class BirthdayInThisMonth(Publication):
             f.write(f"{self.name} birthday {self.birthday_date}\nTurns {self.years_old} years old. "
                     f"Let's congratulate.\n\n")
 
-    def set_name(self, name):
-        self.name = name
-
-    def set_birthday(self, day, year):
-        self.birthday = day
-        self.year = year
-        self.birthday_date = datetime.strftime(datetime.today().replace(day=self.birthday, year=self.year), "%d %B")
-        self.years_old = datetime.now().year - self.year
-
-    def param_write(self):
-        while True:
-            name = input("Enter name of the birthday: ")
-            if len(name.replace(' ', '')) <= 0:
-                print("Your name is empty. Try again")
-            else:
-                break
-        self.set_name(name)
-        while True:
-            try:
-                day = int(input("Enter day of birthday: "))
-                year = int(input("Enter year of birthday: "))
-                self.set_birthday(day, year)
-                if datetime.today().replace(day=self.birthday, year=self.year) > datetime.today():
-                    print("We cannot celebrate unborn")
-                    continue
-            except ValueError:
-                print("Wrong day or year of birthday. Try again")
-                continue
-            else:
-                break
-        self.publish()
-
 
 def start_news():
     """
@@ -179,14 +96,21 @@ def start_news():
                   "Enter - 3 if wanna add birthday in this month\n"
                   "Enter - 0 if you ended add publications\n")
         if n == '1':
-            k = News()
-            k.param_write()
+            text = input("Enter text of news: ")
+            city = input("Enter city where it happened: ")
+            n = News(text, city)
+            n.publish()
         elif n == '2':
-            a = PrivateAd()
-            a.param_write()
+            text = input("Enter text of ad: ")
+            days = int(input("Enter number of days it should be shown: "))
+            a = PrivateAd(text, days)
+            a.publish()
         elif n == '3':
-            b = BirthdayInThisMonth()
-            b.param_write()
+            name = input("Enter name of the birthday boy: ")
+            day = int(input("Enter day of birthday: "))
+            year = int(input("Enter year of birthday: "))
+            b = BirthdayInThisMonth(name, day, year)
+            b.publish()
         elif n == '0':
             record = False
             print("Time to see news feed today")
