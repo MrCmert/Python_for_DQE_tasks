@@ -51,6 +51,10 @@ class News(Publication):
         self.city = c
 
     def param_write(self):
+        """
+        check if parameters write correct and public it
+        :return:
+        """
         while True:
             text = input("Enter text of news: ")
             if len(text.replace(" ", "")) <= 0:
@@ -94,6 +98,10 @@ class PrivateAd(Publication):
         self.insert_date = datetime.strftime(self.exp_date, "%d/%m/%Y")
 
     def param_write(self):
+        """
+        check if parameters write correct and public it
+        :return:
+        """
         while True:
             text = input("Enter text of ad: ")
             if len(text.replace(' ', '')) <= 0:
@@ -140,6 +148,10 @@ class BirthdayInThisMonth(Publication):
         self.years_old = datetime.now().year - self.year
 
     def param_write(self):
+        """
+        check if parameters write correct and public it
+        :return:
+        """
         while True:
             name = input("Enter name of the birthday: ")
             if len(name.replace(' ', '')) <= 0:
