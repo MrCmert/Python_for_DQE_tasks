@@ -179,6 +179,10 @@ class BirthdayInThisMonth(Publication):
 
 
 class FromFiles:
+    """
+    read file and write to news feed.
+    data in file should be in next lines after name of type
+    """
     def __init__(self, path=""):
         self.path = path
 
@@ -186,6 +190,9 @@ class FromFiles:
         self.path = path
 
     def read_file(self):
+        """
+        :return: write to file found type of data
+        """
         with open(self.path, 'r') as f:
             data = f.read().split('\n')
             for i in range(len(data)):
@@ -206,6 +213,10 @@ class FromFiles:
         os.remove(self.path)
 
     def param_write(self):
+        """
+        check if path exists
+        :return:
+        """
         while True:
             path = input("Enter path to file or file name if in the same place: ")
             if len(path.replace(' ', '')) <= 0:
