@@ -22,7 +22,6 @@ def count_words():
             writer.writerow([i, words.count(i)])
 
 
-# letter, count_all, count_uppercase, percentage (add header, spacecharacters are not included)
 def letter_count():
     """
     :return: write to csv file letters and statistic of these letters in news_feed.txt
