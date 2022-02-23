@@ -285,6 +285,9 @@ def start_news():
             record = False
             print("Time to see news feed today")
 
+        count_functions.count_words()
+        count_functions.letter_count()
+
 
 if __name__ == "__main__":
     start_news()
