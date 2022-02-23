@@ -2,6 +2,7 @@ from datetime import datetime
 import re
 import os
 from functions.string_func import normalize_text
+import count_functions
 
 
 class Publication:
@@ -183,6 +184,7 @@ class FromFiles:
     read file and write to news feed.
     data in file should be in next lines after name of type
     """
+
     def __init__(self, path=""):
         self.path = path
 
@@ -191,8 +193,9 @@ class FromFiles:
 
     def read_file(self):
         """
-        :return: write to file found type of data
+        :return: write to file found type of data and delete source if success
         """
+        inserted_lines = []
         with open(self.path, 'r') as f:
             data = f.read().split('\n')
             for i in range(len(data)):
@@ -200,17 +203,36 @@ class FromFiles:
                     if re.sub(r'\s', '', data[i].lower()) == "news":
                         n = News(normalize_text(data[i + 1]), normalize_text(data[i + 2]))
                         n.publish()
+                        inserted_lines.append(i)
+                        inserted_lines.append(i+1)
+                        inserted_lines.append(i+2)
                     elif re.sub(r'\s', '', data[i].lower()) == "privatead":
                         p = PrivateAd(normalize_text(data[i + 1]), data[i + 2])
                         p.publish()
+                        inserted_lines.append(i)
+                        inserted_lines.append(i + 1)
+                        inserted_lines.append(i + 2)
                     elif re.sub(r'\s', '', data[i].lower()) == "birthdayinthismonth":
                         b = BirthdayInThisMonth(normalize_text(data[i + 1]), int(data[i + 2]), int(data[i + 3]))
                         b.publish()
+                        inserted_lines.append(i)
+                        inserted_lines.append(i + 1)
+                        inserted_lines.append(i + 2)
+                        inserted_lines.append(i + 3)
                 except ValueError:
-                    print(f"Something wrong with data in file. Numbers of strings: {i}, {i+1}, {i+2}")
+                    print(f"Something wrong with data in file. Numbers of strings: {i + 2}, {i + 3}")
                     continue
-        print("Founded data inserted")
-        os.remove(self.path)
+        inserted_lines = list(map(lambda x: x + 1, inserted_lines))
+        not_inserted_lines = []
+        for i in range(1, len(data)+1):
+            if i not in inserted_lines:
+                not_inserted_lines.append(i)
+        if len(not_inserted_lines) > 0:
+            print(f"Inserted lines: {inserted_lines}")
+            print(f"Not inserted lines: {not_inserted_lines}")
+        else:
+            os.remove(self.path)
+            print("All data inserted")
 
     def param_write(self):
         """
