@@ -36,7 +36,6 @@ def letter_count():
             letters.append(i)
 
     letters_set = set(list(map(lambda x: x.lower(), letters)))
-    all_letters = len(letters)
 
     with open("letter_count.csv", "w") as f:
         headers = ["letter", "count_all", "count_uppercase", "percentage"]
@@ -46,7 +45,7 @@ def letter_count():
             writer.writerow({"letter": i,
                              "count_all": letters.count(i)+letters.count(i.upper()),
                              "count_uppercase": letters.count(i.upper()),
-                             "percentage": round((letters.count(i)+letters.count(i.upper()))/all_letters*100, 2)})
+                             "percentage": round((letters.count(i)+letters.count(i.upper()))/len(data)*100, 2)})
 
 
 if __name__ == "__main__":
