@@ -181,7 +181,11 @@ class BirthdayInThisMonth(Publication):
 class FromFiles:
     """
     read file and write to news feed.
-    data in file should be in next lines after name of type
+    data of object should be in next lines after name of type
+    example:
+    news
+    something go wrong
+    tokyo
     """
 
     def __init__(self, path=""):
