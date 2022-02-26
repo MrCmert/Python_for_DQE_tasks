@@ -3,6 +3,7 @@ import re
 import os
 from functions.string_func import normalize_text
 import count_functions
+import json
 
 
 class Publication:
@@ -248,9 +249,61 @@ class FromFiles:
                 try:
                     self.read_file()
                 except FileNotFoundError:
-                    print("File not exist. Try again")
+                    print("Something wrong with file. Try again")
                     continue
                 break
+
+
+class FromJson(FromFiles):
+    """
+    example of data in file
+    {
+    "objects" :[
+    {
+      "type"  : "News",
+      "text"  : "Something happen",
+      "city"  : "Kyiv"
+    },
+    {
+      "type"  : "Private Ad",
+      "text"  : "Selling garage",
+      "date"  : "25/03/2022"
+    }
+    ]
+    }
+    :return: write to file found type of data from json and delete source if success
+    """
+    def read_file(self):
+        is_delete = True
+        # check that file json format
+        try:
+            with open(self.path, "r") as f:
+                a = json.load(f)
+        except json.decoder.JSONDecodeError:
+            print("It is not json file. Try again")
+            return 0
+
+        for i in a["objects"]:
+            try:
+                if re.sub(r'\s', '', i["type"].lower()) == "news":
+                    n = News(i["text"], i["city"])
+                    n.publish()
+                elif re.sub(r'\s', '', i["type"].lower()) == "privatead":
+                    p = PrivateAd(i["text"], i["date"])
+                    p.publish()
+                elif re.sub(r'\s', '', i["type"].lower()) == "birthdayinthismonth":
+                    b = BirthdayInThisMonth(i["name"], int(i["day"]), int(i["year"]))
+                    b.publish()
+            except ValueError:
+                print(f"Something wrong with data of the file in this part {i}")
+                is_delete = False
+                continue
+
+        if is_delete:
+            os.remove(self.path)
+            print("All data inserted")
+        else:
+            print("Something wrong with data in file")
 
 
 def start_news():
@@ -268,6 +321,7 @@ def start_news():
                   "Enter - 2 if wanna add privat ad\n"
                   "Enter - 3 if wanna add birthday in this month\n"
                   "Enter - 4 if wanna load data from file\n"
+                  "Enter - 5 if wanna load data from json file\n"
                   "Enter - 0 if you ended add publications\n")
         if n == '1':
             k = News()
@@ -281,6 +335,9 @@ def start_news():
         elif n == '4':
             f = FromFiles()
             f.param_write()
+        elif n == '5':
+            j = FromJson()
+            j.param_write()
         elif n == '0':
             record = False
             print("Time to see news feed today")
