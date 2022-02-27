@@ -2,6 +2,7 @@ import json
 import os
 import re
 from datetime import datetime
+import xml.etree.ElementTree as ET
 
 import count_functions
 from functions.string_func import normalize_text
@@ -308,7 +309,49 @@ class FromJson(FromFiles):
 
 
 class FromXml(FromFiles):
-    pass
+    """
+    example of data in file:
+    <Objects>
+        <Element name="News">
+            <Text>Something happen</Text>
+            <City>Kyiv</City>
+        </Element>
+    </Objects>
+        :return: write to file found type of data from xml and delete source if success
+    """
+    def read_file(self):
+        is_delete = True
+
+        try:
+            tree = ET.parse(self.path)
+        except ET.ParseError:
+            print("It is not xml file. Try again")
+            return 0
+
+        root = tree.getroot()
+        for element in root:
+            try:
+                if re.sub(r'\s', '', element.attrib["name"].lower()) == "news":
+                    n = News(element.find("Text").text, element.find("City").text)
+                    n.publish()
+                elif re.sub(r'\s', '', element.attrib["name"].lower()) == "privatead":
+                    p = PrivateAd(element.find("Text").text, element.find("Date").text)
+                    p.publish()
+                elif re.sub(r'\s', '', element.attrib["name"].lower()) == "birthdayinthismonth":
+                    b = BirthdayInThisMonth(element.find("Name").text,
+                                            int(element.find("Day").text),
+                                            int(element.find("Year").text))
+                    b.publish()
+            except ValueError:
+                print(f"Something wrong with data in element with index {list(root).index(element)}")
+                is_delete = False
+                continue
+
+        if is_delete:
+            os.remove(self.path)
+            print("All data inserted")
+        else:
+            print("Something wrong with data in file")
 
 
 def start_news():
@@ -327,6 +370,7 @@ def start_news():
                   "Enter - 3 if wanna add birthday in this month\n"
                   "Enter - 4 if wanna load data from file\n"
                   "Enter - 5 if wanna load data from json file\n"
+                  "Enter - 6 if wanna load data from json file\n"
                   "Enter - 0 if you ended add publications\n")
         if n == '1':
             k = News()
@@ -343,6 +387,9 @@ def start_news():
         elif n == '5':
             j = FromJson()
             j.param_write()
+        elif n == '6':
+            x = FromXml()
+            x.param_write()
         elif n == '0':
             record = False
             print("Time to see news feed today")

@@ -1,0 +1,19 @@
+<Objects>
+    <Element name="News">
+        <Text>Something happen</Text>
+        <City>Kyiv</City>
+    </Element>
+    <Element name="Private Ad">
+        <Text>Selling garage</Text>
+        <Date>05/12/2022</Date>
+    </Element>
+    <Element name="Birthday in this month">
+        <Name>Anna</Name>
+        <Day>25</Day>
+        <Year>2010</Year>
+    </Element>
+    <Element name="News">
+        <Text>Something happen again</Text>
+        <City>Kyiv</City>
+    </Element>
+</Objects>
