@@ -1,9 +1,10 @@
-from datetime import datetime
-import re
-import os
-from functions.string_func import normalize_text
-import count_functions
 import json
+import os
+import re
+from datetime import datetime
+
+import count_functions
+from functions.string_func import normalize_text
 
 
 class Publication:
@@ -304,6 +305,10 @@ class FromJson(FromFiles):
             print("All data inserted")
         else:
             print("Something wrong with data in file")
+
+
+class FromXml(FromFiles):
+    pass
 
 
 def start_news():
