@@ -6,6 +6,7 @@ import xml.etree.ElementTree as ET
 
 import count_functions
 from functions.string_func import normalize_text
+from to_db import ToDb
 
 
 class Publication:
@@ -53,6 +54,8 @@ class News(Publication):
         Publication.publish(self)
         with open('news_feed.txt', 'a') as f:
             f.write(f"{self.city}, {self.publication_date}\n\n")
+        t = ToDb()
+        t.insert_record(class_name="news", text=f"{self.text}", city=f"{self.city}")
 
     def set_city(self, c):
         self.city = c
@@ -96,6 +99,8 @@ class PrivateAd(Publication):
         Publication.publish(self)
         with open('news_feed.txt', 'a') as f:
             f.write(f"Actual until: {self.insert_date}, {self.days} days left\n\n")
+        t = ToDb()
+        t.insert_record(class_name="private_ad", text=f"{self.text}", date=f"{self.exp_date}")
 
     def set_exp_date(self, exp_date):
         self.exp_date = datetime.strptime(exp_date, "%d/%m/%Y")
@@ -144,6 +149,11 @@ class BirthdayInThisMonth(Publication):
         with open('news_feed.txt', 'a') as f:
             f.write(f"{self.name} birthday {self.birthday_date}\nTurns {self.years_old} years old. "
                     f"Let's congratulate.\n\n")
+        t = ToDb()
+        t.insert_record(class_name="birthday_in_this_month",
+                        name=f"{self.name}",
+                        day=f"{self.birthday}",
+                        year=f"{self.year}")
 
     def set_name(self, name):
         self.name = name
@@ -370,7 +380,7 @@ def start_news():
                   "Enter - 3 if wanna add birthday in this month\n"
                   "Enter - 4 if wanna load data from file\n"
                   "Enter - 5 if wanna load data from json file\n"
-                  "Enter - 6 if wanna load data from json file\n"
+                  "Enter - 6 if wanna load data from xml file\n"
                   "Enter - 0 if you ended add publications\n")
         if n == '1':
             k = News()
