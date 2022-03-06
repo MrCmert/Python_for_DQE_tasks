@@ -370,7 +370,7 @@ def start_news():
                   "Enter - 3 if wanna add birthday in this month\n"
                   "Enter - 4 if wanna load data from file\n"
                   "Enter - 5 if wanna load data from json file\n"
-                  "Enter - 6 if wanna load data from json file\n"
+                  "Enter - 6 if wanna load data from xml file\n"
                   "Enter - 0 if you ended add publications\n")
         if n == '1':
             k = News()
