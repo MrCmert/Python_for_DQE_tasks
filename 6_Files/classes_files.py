@@ -361,23 +361,27 @@ class FromXml(FromFiles):
         for element in root:
             try:
                 if re.sub(r'\s', '', element.attrib["name"].lower()) == "news":
-                    n = News(element.find("Text").text, element.find("City").text)
+                    n = News()
+                    n.set_text(element.find("Text").text)
+                    n.set_city(element.find("City").text)
                     n.publish()
                 elif re.sub(r'\s', '', element.attrib["name"].lower()) == "privatead":
-                    p = PrivateAd(element.find("Text").text, element.find("Date").text)
+                    p = PrivateAd()
+                    p.set_text(element.find("Text").text)
+                    p.set_exp_date(element.find("Date").text)
                     p.publish()
                 elif re.sub(r'\s', '', element.attrib["name"].lower()) == "birthdayinthismonth":
-                    b = BirthdayInThisMonth(element.find("Name").text,
-                                            int(element.find("Day").text),
-                                            int(element.find("Year").text))
+                    b = BirthdayInThisMonth()
+                    b.set_name(element.find("Name").text)
+                    b.set_birthday(int(element.find("Day").text), int(element.find("Year").text))
                     b.publish()
-            except ValueError:
+            except (ValueError, AttributeError):
                 print(f"Something wrong with data in element with index {list(root).index(element)}")
                 is_delete = False
                 continue
 
         if is_delete:
-            os.remove(self.path)
+            #os.remove(self.path)
             print("All data inserted")
         else:
             print("Something wrong with data in file")
