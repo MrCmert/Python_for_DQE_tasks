@@ -2,12 +2,16 @@ from datetime import datetime
 import re
 import os
 from functions.string_func import normalize_text
+from count_functions import letter_count, count_words
 
 
 class Publication:
     def __init__(self, t="None"):
         self.text = t
         self.file_name = "news_feed.txt"
+
+    def get_file_name(self):
+        return self.file_name
 
     def publish_topic(self):
         """
@@ -304,8 +308,9 @@ def start_news():
             record = False
             print("Time to see news feed today")
 
-        count_functions.count_words()
-        count_functions.letter_count()
+        p = Publication()
+        count_words(p.get_file_name())
+        letter_count(p.get_file_name())
 
 
 if __name__ == "__main__":
