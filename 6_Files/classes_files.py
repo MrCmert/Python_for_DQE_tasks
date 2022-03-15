@@ -281,7 +281,8 @@ def start_news():
     start fill news feed
     :return: write all news in file
     """
-    with open('news_feed.txt', 'w') as file:
+    p = Publication()
+    with open(p.get_file_name(), 'w') as file:
         file.write("News feed:\n")
 
     record = True
@@ -308,7 +309,6 @@ def start_news():
             record = False
             print("Time to see news feed today")
 
-        p = Publication()
         count_words(p.get_file_name())
         letter_count(p.get_file_name())
 
