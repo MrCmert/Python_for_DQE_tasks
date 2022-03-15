@@ -381,7 +381,7 @@ class FromXml(FromFiles):
                 continue
 
         if is_delete:
-            #os.remove(self.path)
+            os.remove(self.path)
             print("All data inserted")
         else:
             print("Something wrong with data in file")
