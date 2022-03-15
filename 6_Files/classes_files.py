@@ -7,12 +7,13 @@ from functions.string_func import normalize_text
 class Publication:
     def __init__(self, t="None"):
         self.text = t
+        self.file_name = "news_feed.txt"
 
     def publish_topic(self):
         """
         :return: add name of class into file
         """
-        with open('news_feed.txt', 'a') as f:
+        with open(self.file_name, 'a') as f:
             topic = str(type(self).__name__)
             new_topic = topic[0]
             for i in range(1, len(topic)):
@@ -28,7 +29,7 @@ class Publication:
         """
         :return: add text into file
         """
-        with open('news_feed.txt', 'a') as f:
+        with open(self.file_name, 'a') as f:
             f.write(self.text + "\n")
 
     def set_text(self, t):
@@ -50,7 +51,7 @@ class News(Publication):
         """
         Publication.publish_topic(self)
         Publication.publish(self)
-        with open('news_feed.txt', 'a') as f:
+        with open(self.file_name, 'a') as f:
             f.write(f"{self.city}, {self.publication_date}\n\n")
 
     def set_city(self, c):
@@ -96,7 +97,7 @@ class PrivateAd(Publication):
         """
         Publication.publish_topic(self)
         Publication.publish(self)
-        with open('news_feed.txt', 'a') as f:
+        with open(self.file_name, 'a') as f:
             f.write(f"Actual until: {self.insert_date}, {self.days} days left\n\n")
 
     def set_exp_date(self, exp_date):
@@ -132,6 +133,7 @@ class PrivateAd(Publication):
 
 class BirthdayInThisMonth(Publication):
     def __init__(self, n="None", b=1, y=2020):
+        Publication.__init__(self)
         self.name = n
         self.birthday = b
         self.year = y
@@ -143,7 +145,7 @@ class BirthdayInThisMonth(Publication):
         :return: add topic and birthday boy with date and years to file
         """
         Publication.publish_topic(self)
-        with open('news_feed.txt', 'a') as f:
+        with open(self.file_name, 'a') as f:
             f.write(f"{self.name} birthday {self.birthday_date}\nTurns {self.years_old} years old. "
                     f"Let's congratulate.\n\n")
 
