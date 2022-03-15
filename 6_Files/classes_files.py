@@ -309,13 +309,19 @@ class FromJson(FromFiles):
         for i in a["objects"]:
             try:
                 if re.sub(r'\s', '', i["type"].lower()) == "news":
-                    n = News(i["text"], i["city"])
+                    n = News()
+                    n.set_text(i["text"])
+                    n.set_city(i["city"])
                     n.publish()
                 elif re.sub(r'\s', '', i["type"].lower()) == "privatead":
-                    p = PrivateAd(i["text"], i["date"])
+                    p = PrivateAd()
+                    p.set_text(i["text"])
+                    p.set_exp_date(i["date"])
                     p.publish()
                 elif re.sub(r'\s', '', i["type"].lower()) == "birthdayinthismonth":
-                    b = BirthdayInThisMonth(i["name"], int(i["day"]), int(i["year"]))
+                    b = BirthdayInThisMonth()
+                    b.set_name(i["name"])
+                    b.set_birthday(int(i["day"]), int(i["year"]))
                     b.publish()
             except ValueError:
                 print(f"Something wrong with data of the file in this part {i}")
