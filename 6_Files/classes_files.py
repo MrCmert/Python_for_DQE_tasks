@@ -335,7 +335,7 @@ class FromJson(FromFiles):
                     b.set_name(i["name"])
                     b.set_birthday(int(i["day"]), int(i["year"]))
                     b.publish()
-            except ValueError:
+            except (ValueError, KeyError):
                 print(f"Something wrong with data of the file in this part {i}")
                 is_delete = False
                 continue
