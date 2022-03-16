@@ -2,12 +2,11 @@ import re
 import csv
 
 
-def count_words(path):
+def count_words(data):
     """
     :return: write to csv file words and count number of these words in news_feed.txt
     """
-    with open(path) as f:
-        data = f.read().lower()
+    data = data.lower()
 
     # find all words
     rgx = re.compile(r"(\w[\w']*\w|\w)")
@@ -22,12 +21,10 @@ def count_words(path):
             writer.writerow([i, words.count(i)])
 
 
-def letter_count(path):
+def letter_count(data):
     """
     :return: write to csv file letters and statistic of these letters in news_feed.txt
     """
-    with open(path) as f:
-        data = f.read()
 
     letters = []
 

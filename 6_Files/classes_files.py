@@ -309,8 +309,10 @@ def start_news():
             record = False
             print("Time to see news feed today")
 
-        count_words(p.get_file_name())
-        letter_count(p.get_file_name())
+        with open(p.get_file_name()) as f:
+            data = f.read()
+            count_words(data)
+            letter_count(data)
 
 
 if __name__ == "__main__":
